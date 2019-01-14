@@ -1,12 +1,9 @@
-import mainConfig from "./config/main";
-import {User, Product} from "./models"
 import Importer from "./lib/importer"
+import DirWatcher, {changedEventName} from "./lib/dirwatcher"
 
-//console.log(mainConfig.name);
+const watcher = new DirWatcher();
+watcher.watch('./data/', 2000);
 
-// const user = new User;
-// const product = new Product();
-
-const path = './data/sample.csv';
-const result = Importer.import(path);
-console.log(result);
+watcher.on(changedEventName, (filePath) => {
+    Importer.import(filePath).then(parsedCsv => console.log(parsedCsv));
+});
