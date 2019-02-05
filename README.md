@@ -15,3 +15,5 @@ Streams file commands:
 `node streams.js -a convertToFile -f ../data/sample.csv`
 
 `node streams.js -a cssBuilder -p ../data/css/`
+
+to run API just `npm run api`
