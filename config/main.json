@@ -1,3 +1,6 @@
 {
-  "name": "Node.js Homework Application"
+  "name": "Node.js Homework Application",
+  "login": "admin",
+  "password": "admin",
+  "email": "some@email.com"
 }
