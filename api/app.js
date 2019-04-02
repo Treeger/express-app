@@ -6,9 +6,17 @@ import cookieParser from 'cookie-parser';
 import cookieHandler from "./middlewares/cookieHandler";
 import parsedQuery from "./middlewares/parsedQuery";
 import {passportJWTStrategy} from "./middlewares/passport"
+import mongoose from 'mongoose';
 
 const app = express();
 
+mongoose
+    .connect(
+        'mongodb://127.0.0.1:27017/mongodb',
+        { useNewUrlParser: true }
+    )
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));

@@ -1,4 +1,5 @@
 import express from 'express';
+import Product from "../models/mongoose/product";
 const models = require('../models');
 
 const productsRouter = express.Router({mergeParams: true});
@@ -47,5 +48,12 @@ productsRouter.route('/:id/reviews')
             return res.send(product.reviews);
         }).catch(e => res.send('something went wrong'));
     });
+
+productsRouter.route("/:id").delete((req, res) => {
+    Product.deleteOne({_id: req.params.id}, (err, product) => {
+        if (err) return res.send(err);
+        return res.send(product);
+    });
+});
 
 export default productsRouter
