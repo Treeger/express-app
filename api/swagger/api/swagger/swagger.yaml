@@ -8,33 +8,77 @@ host: localhost:10010
 basePath: /
 # 
 schemes:
-  # tip: remove http to make production-grade
   - http
   - https
-# format of bodies a client can send (Content-Type)
 consumes:
   - application/json
-# format of the responses to the client (Accepts)
 produces:
   - application/json
 paths:
   /:
-    # binds a127 app logic to a route
     x-swagger-router-controller: cities
     get:
+      tags:
+        - "city"
       description: Returns 'Cities'
       # used as the method name of the controller
       operationId: Cities
-      parameters:
-        - name: name
-          description: Returns array of cities
       responses:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/CitiesResponse"
-        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    post:
+      tags:
+        - "city"
+      description: "create new City"
+      operationId: "createCity"
+      consumes:
+        - "application/json"
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CitiesResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /{id}:
+    get:
+      tags:
+        - "city"
+      description: Returns 'Specific city'
+      operationId: Cities Post
+      parameters:
+        - name: "id"
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CitiesResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+        - "city"
+      description: Deleter 'Specific city'
+      operationId: delete Post
+      parameters:
+        - name: "id"
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/CitiesResponse"
         default:
           description: Error
           schema:
@@ -43,6 +87,21 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  City:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        example: "Warsaw"
+      country:
+        type: "string"
+        example: "Russia"
+      capital:
+        type: "boolean"
+        default: false
   CitiesResponse:
     required:
       - message
